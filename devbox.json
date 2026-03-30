@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": ["nodejs@22"],
+  "shell": {
+    "init_hook": ["unset LC_ALL", "echo 'Welcome to devbox!' > /dev/null"],
+    "scripts": {
+      "start": ["npm run start"],
+      "check": ["npm run check"],
+      "lint": ["npm run lint"],
+      "test": ["npm run test"],
+      "typecheck": ["npm run typecheck"],
+      "format": ["npm run format"]
+    }
+  }
+}
