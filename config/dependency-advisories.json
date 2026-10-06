@@ -14,28 +14,6 @@
       "reviewBy": "2026-11-05"
     },
     {
-      "id": "1239765",
-      "package": "image-size",
-      "severity": "high",
-      "title": "image-size: JXL and HEIF parsers allow denial of service through infinite loops",
-      "exposure": "Build-time only. Used by the Expo asset pipeline in @expo/cli and expo-asset on Node while bundling. Not shipped to the device runtime. This does not change the M3 requirement to normalize and validate every upload in a quarantined server-side worker.",
-      "risk": "A decompression-bomb or malformed JXL/HEIF asset added in a pull request could hang the bundler or CI runner.",
-      "mitigation": "Contributor-supplied image assets are treated as untrusted input, so CI jobs are isolated and time-limited. Future server-side sanitization is specified in docs/production-roadmap.md milestone M3.",
-      "owner": "@timpowellgit",
-      "reviewBy": "2026-11-05"
-    },
-    {
-      "id": "1239766",
-      "package": "image-size",
-      "severity": "high",
-      "title": "image-size: ICNS parser allows denial of service through an infinite loop",
-      "exposure": "Build-time only, same image-size asset pipeline as advisory 1239765. Not part of the shipped bundle.",
-      "risk": "A malformed icon asset could hang the bundler or CI runner.",
-      "mitigation": "Assets are version-controlled and reviewed, and CI jobs are time-limited.",
-      "owner": "@timpowellgit",
-      "reviewBy": "2026-11-05"
-    },
-    {
       "id": "1240912",
       "package": "node-forge",
       "severity": "high",
@@ -43,50 +21,6 @@
       "exposure": "Build-time only. Reached through @expo/code-signing-certificates in @expo/cli, which is used for EAS code signing on Node. CatMap does not verify arbitrary third-party RSA signatures with this library today.",
       "risk": "A crafted certificate or signature could pass verification during a signing step. Requires an attacker to influence build inputs or the signing service response.",
       "mitigation": "Signing credentials are supplied by EAS through CI environment variables and are never committed. Rotate signing credentials if the dependency is ever used to validate untrusted input.",
-      "owner": "@timpowellgit",
-      "reviewBy": "2026-11-05"
-    },
-    {
-      "id": "1124252",
-      "package": "postcss",
-      "severity": "high",
-      "title": "PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments",
-      "exposure": "Build-time only. Used by the Metro CSS pipeline through @expo/metro-config on Node while bundling. Not shipped to the device runtime.",
-      "risk": "A stylesheet or node_modules change in a pull request could read files from the bundling machine, which is the highest-value residual risk in this register because CI runners hold secrets.",
-      "mitigation": "Pull requests from forks run without repository secrets, secret scanning is enforced in CI, and workflows grant read-only permissions. Remove this entry as soon as the Expo upgrade resolves it.",
-      "owner": "@timpowellgit",
-      "reviewBy": "2026-11-05"
-    },
-    {
-      "id": "1139510",
-      "package": "postcss",
-      "severity": "high",
-      "title": "PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure",
-      "exposure": "Build-time only, same PostCSS and Metro path as advisory 1124252.",
-      "risk": "A stylesheet change could disclose map files from the build machine.",
-      "mitigation": "Fork pull requests run without secrets, and secret scanning blocks accidental commits.",
-      "owner": "@timpowellgit",
-      "reviewBy": "2026-11-05"
-    },
-    {
-      "id": "1117015",
-      "package": "postcss",
-      "severity": "moderate",
-      "title": "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
-      "exposure": "Build-time only. Generated CSS is written to the bundle, not served as a standalone stylesheet to browsers.",
-      "risk": "Minimal for a React Native bundle that has no browser CSS parsing surface.",
-      "mitigation": "No action required beyond tracking; the upgrade removes it.",
-      "owner": "@timpowellgit",
-      "reviewBy": "2026-11-05"
-    },
-    {
-      "id": "1130709",
-      "package": "postcss",
-      "severity": "moderate",
-      "title": "PostCSS: incomplete fix of GHSA-6g55-p6wh-862q, attacker-controlled sourceMappingURL reads arbitrary .map files when from is unset",
-      "exposure": "Build-time only, same PostCSS and Metro path as advisory 1124252.",
-      "risk": "A stylesheet change could read source map files from the build machine.",
-      "mitigation": "Fork pull requests run without secrets, and secret scanning blocks accidental commits.",
       "owner": "@timpowellgit",
       "reviewBy": "2026-11-05"
     },
@@ -106,9 +40,9 @@
       "package": "sprintf-js",
       "severity": "moderate",
       "title": "sprintf-js vulnerable to denial of service through unbounded precision specifiers",
-      "exposure": "Build-time only, reached through argparse in the React Native community CLI on Node. Not shipped to the device runtime.",
+      "exposure": "Build-time only, reached through argparse in the React Native community CLI on Node. Not shipped to the device runtime. Still present after the SDK 55 step.",
       "risk": "A crafted CLI argument could stall a build. Arguments come from committed npm scripts.",
-      "mitigation": "No runtime exposure; the upgrade removes it.",
+      "mitigation": "No runtime exposure; a later Expo SDK step in docs/decisions/0001-expo-sdk-upgrade-path.md removes it.",
       "owner": "@timpowellgit",
       "reviewBy": "2026-11-05"
     },
@@ -117,9 +51,9 @@
       "package": "uuid",
       "severity": "moderate",
       "title": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
-      "exposure": "Build-time only, reached through @expo/cli on Node. The app does not generate UUIDs with a caller-supplied buffer.",
+      "exposure": "Build-time only, reached through @expo/cli on Node. The app does not generate UUIDs with a caller-supplied buffer. Still present after the SDK 55 step.",
       "risk": "Not reachable from application code.",
-      "mitigation": "No runtime exposure; the upgrade removes it.",
+      "mitigation": "No runtime exposure; a later Expo SDK step in docs/decisions/0001-expo-sdk-upgrade-path.md removes it.",
       "owner": "@timpowellgit",
       "reviewBy": "2026-11-05"
     }

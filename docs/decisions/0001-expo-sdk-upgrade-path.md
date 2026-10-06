@@ -46,12 +46,12 @@ migrating to it.
 Upgrade one SDK at a time in four separate, behavior-neutral pull requests,
 each ending on a green CI run and a physical-device smoke test:
 
-| Step | Expo SDK | React Native | React  | expo-image-picker | expo-location | expo-status-bar |
-| ---- | -------- | ------------ | ------ | ----------------- | ------------- | --------------- |
-| Now  | 54.0.37  | 0.81.5       | 19.1.0 | ~17.0.11          | ~19.0.8       | ~3.0.9          |
-| 1    | 55.0.31  | 0.83.10      | 19.2.0 | ~55.0.24          | ~55.1.14      | ~55.0.6         |
-| 2    | 56.0.23  | 0.85.3       | 19.2.3 | ~56.0.25          | ~56.0.26      | ~56.0.4         |
-| 3    | 57.0.26  | 0.86.3       | 19.2.3 | ~57.0.20          | ~57.0.20      | ~57.0.1         |
+| Step         | Expo SDK | React Native | React  | expo-image-picker | expo-location | expo-status-bar | Status     |
+| ------------ | -------- | ------------ | ------ | ----------------- | ------------- | --------------- | ---------- |
+| 0 (baseline) | 54.0.37  | 0.81.5       | 19.1.0 | ~17.0.11          | ~19.0.8       | ~3.0.9          | superseded |
+| 1            | 55.0.31  | 0.83.10      | 19.2.0 | ~55.0.24          | ~55.1.14      | ~55.0.6         | landed     |
+| 2            | 56.0.23  | 0.85.3       | 19.2.3 | ~56.0.25          | ~56.0.26      | ~56.0.4         | pending    |
+| 3            | 57.0.26  | 0.86.3       | 19.2.3 | ~57.0.20          | ~57.0.20      | ~57.0.1         | pending    |
 
 Versions come from each SDK's `bundledNativeModules.json`. The exact patch
 versions are resolved at upgrade time by `npx expo install`, which is the
@@ -69,6 +69,16 @@ Each step follows the same procedure:
 5. Remove any `config/dependency-advisories.json` entries the step resolves,
    and re-run the advisory policy check.
 6. Re-record the resulting versions in this ADR's table before the next step.
+
+### Progress log
+
+- **Step 1 (SDK 54 → 55) implemented.** `expo@55.0.31`,
+  `react-native@0.83.10`, `react@19.2.0`. `app.json` no longer sets
+  `newArchEnabled` or `android.edgeToEdgeEnabled`, because SDK 55 removed both
+  properties; New Architecture and edge-to-edge are now always on. The step
+  resolved six advisories (two `image-size`, four `postcss`) and introduced
+  none, so the advisory register dropped from eleven entries to five. A
+  physical-device smoke test is still required before merge.
 
 ## Consequences
 
@@ -105,7 +115,7 @@ before milestone M7; the runtime-version policy is defined there.
 
 ## Open questions
 
-- Whether `expo-doctor` or `npm audit` surfaces a new advisory in SDK 55, 56, or
-  57 that is not in the current register.
+- Whether `expo-doctor` or `npm audit` surfaces a new advisory in SDK 56 or 57
+  that is not in the current register. SDK 55 introduced none.
 - Whether any native module used later (map, notifications, secure store) needs
   a config-plugin change at a specific SDK boundary. This is resolved per step.
