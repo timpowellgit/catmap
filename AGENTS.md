@@ -24,6 +24,23 @@
 - Use existing test fixtures and helpers before creating new ones.
 - Read the project's testing conventions doc if one exists.
 
+## Dependencies
+
+- Run `npm run audit:policy` after changing dependencies. It fails on
+  unreviewed advisories, stale register entries, and expired review dates.
+- Track every accepted advisory in `config/dependency-advisories.json` with an
+  owner, exposure analysis, mitigation, and review date.
+- Expo SDK upgrades are sequenced by hand in
+  `docs/decisions/0001-expo-sdk-upgrade-path.md`. Do not jump SDK versions in a
+  single change, and do not accept a Dependabot SDK bump.
+
+## Continuous integration
+
+- Every pull request must pass `.github/workflows/ci.yml`: `npm run check`,
+  `npm test`, Expo Doctor, the advisory policy, database tests, secret
+  scanning, and dependency review.
+- CI must run without production credentials or paid external providers.
+
 ## Git
 
 - Write concise commit messages that describe what changed and why.
