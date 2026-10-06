@@ -18,6 +18,17 @@ EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
 
 The app also accepts `EXPO_PUBLIC_SUPABASE_ANON_KEY` or `EXPO_PUBLIC_SUPABASE_KEY` as fallbacks, but `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is the preferred name in this repo.
 
+Configuration is validated in `src/lib/environment.ts`:
+
+- a server-only variable name (for example `SUPABASE_SERVICE_ROLE_KEY` or an
+  `EXPO_PUBLIC_` variant of it) is rejected, because anything named
+  `EXPO_PUBLIC_` is bundled into the shipped app;
+- setting only one of the URL and key fails fast instead of failing later;
+- a non-http(s) URL is rejected;
+- setting neither leaves the app unconfigured, which the current prototype
+  supports by showing a setup message. When environment separation lands
+  (milestone M3), a missing configuration becomes a hard startup failure.
+
 ## Dashboard Configuration
 
 1. Create a Supabase project.
