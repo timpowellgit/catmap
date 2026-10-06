@@ -15,10 +15,10 @@
     "check": "npm run lint && npm run typecheck && npm run format:check"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^3.0.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
     "@supabase/supabase-js": "^2.100.1",
-    "expo": "~54.0.33",
-    "expo-image-picker": "~17.0.10",
+    "expo": "~54.0.37",
+    "expo-image-picker": "~17.0.11",
     "expo-location": "~19.0.8",
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/react": "~19.1.0",
     "eslint": "^9.39.4",
-    "eslint-config-expo": "^55.0.0",
+    "eslint-config-expo": "~10.0.0",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
     "typescript": "~5.9.2"

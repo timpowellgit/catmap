@@ -5,6 +5,7 @@ CatMap uses Supabase for:
 - anonymous auth, so every sighting has a stable `user_id`
 - private image storage for sighting photos
 - a server-side `create_sighting` Postgres function that computes public coordinates and points
+- a private analysis-job queue for asynchronous vision matching
 
 ## Environment
 
@@ -21,7 +22,8 @@ The app also accepts `EXPO_PUBLIC_SUPABASE_ANON_KEY` or `EXPO_PUBLIC_SUPABASE_KE
 
 1. Create a Supabase project.
 2. Enable anonymous sign-ins in Auth.
-3. Run the SQL migration from `supabase/migrations/20260330043000_initial_sightings.sql`.
+3. Apply every migration in `supabase/migrations` in timestamp order. With a
+   linked CLI project, use `supabase db push` after reviewing the pending plan.
 
 The migration creates:
 
@@ -31,6 +33,32 @@ The migration creates:
 - a private `sightings` storage bucket
 - storage policies scoped to `auth.uid()`
 - a `create_sighting(...)` RPC that calculates points and coarse public coordinates
+
+The hardening migration additionally:
+
+- restricts direct sighting reads to the owner, preserving exact coordinates
+- exposes active feed rows through `list_active_sightings(...)`, which omits exact coordinates
+- validates location ranges, attributes, note length, timestamps, and photo-path ownership
+- coarsens public coordinates to the center of a 0.005-degree cell
+- atomically enqueues one private vision-analysis job for every sighting
+
+The application does not yet run a vision model. See `docs/vision-matching.md`
+for the model-independent processing boundary and benchmark requirements.
+
+## Local Database Checks
+
+The committed Supabase configuration supports a disposable local stack:
+
+```bash
+npx supabase start
+npx supabase db reset
+npx supabase test db
+npx supabase stop
+```
+
+`db reset` destroys only the local development database. The database tests
+verify the privacy projection, owner-only exact reads, input validation, and
+atomic analysis-job enqueueing.
 
 ## Current Client Flow
 

@@ -5,6 +5,7 @@ CatMap is a mobile app for spotting outdoor cats, scoring unique sightings, and 
 ## Current Stack
 
 - Expo + React Native + TypeScript
+- Supabase Auth, Postgres, and private object storage
 - DevBox for local shell setup
 - npm for package management
 
@@ -30,15 +31,15 @@ npm run format
 
 1. Create a Supabase project.
 2. Enable anonymous sign-ins in Auth.
-3. Run [20260330043000_initial_sightings.sql](/Users/timpowell/repos/catmap/supabase/migrations/20260330043000_initial_sightings.sql) in the Supabase SQL editor or through the CLI.
-4. Copy [.env.example](/Users/timpowell/repos/catmap/.env.example) to `.env` and add:
+3. Apply all files in [supabase/migrations](supabase/migrations) in timestamp order.
+4. Copy [.env.example](.env.example) to `.env` and add:
 
 ```bash
 EXPO_PUBLIC_SUPABASE_URL=...
 EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
 ```
 
-See [supabase.md](/Users/timpowell/repos/catmap/docs/supabase.md) for the full setup notes.
+See [supabase.md](docs/supabase.md) for setup and local database test commands.
 
 ## V0 Product Scope
 
@@ -52,7 +53,8 @@ See [supabase.md](/Users/timpowell/repos/catmap/docs/supabase.md) for the full s
 
 - Work inside `devbox shell`
 - Keep the MVP focused on vertical slices
-- Avoid computer-vision features until the manual matching flow works
+- Keep computer-vision matches advisory, benchmarked, and subject to human confirmation
 - The current app implements the first persisted vertical slice: create a sighting, upload the photo, and save the record through Supabase
 
 See [docs/mvp.md](docs/mvp.md) for the current product baseline.
+See [docs/vision-matching.md](docs/vision-matching.md) for the planned open-set cat-matching architecture.

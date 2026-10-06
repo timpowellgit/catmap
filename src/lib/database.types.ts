@@ -143,6 +143,53 @@ export type Database = {
           },
         ];
       };
+      sighting_analysis_jobs: {
+        Row: {
+          id: string;
+          sighting_id: string;
+          status: 'pending' | 'processing' | 'completed' | 'failed';
+          attempt_count: number;
+          available_at: string;
+          locked_at: string | null;
+          locked_by: string | null;
+          last_error: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          sighting_id: string;
+          status?: 'pending' | 'processing' | 'completed' | 'failed';
+          attempt_count?: number;
+          available_at?: string;
+          locked_at?: string | null;
+          locked_by?: string | null;
+          last_error?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          sighting_id?: string;
+          status?: 'pending' | 'processing' | 'completed' | 'failed';
+          attempt_count?: number;
+          available_at?: string;
+          locked_at?: string | null;
+          locked_by?: string | null;
+          last_error?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'sighting_analysis_jobs_sighting_id_fkey';
+            columns: ['sighting_id'];
+            isOneToOne: true;
+            referencedRelation: 'sightings';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -175,6 +222,26 @@ export type Database = {
           is_outdoor_confirmed?: boolean;
         };
         Returns: Database['public']['Tables']['sightings']['Row'];
+      };
+      list_active_sightings: {
+        Args: {
+          result_limit?: number;
+          before_created_at?: string | null;
+        };
+        Returns: {
+          id: string;
+          user_id: string;
+          photo_path: string;
+          observed_at: string;
+          public_latitude: number;
+          public_longitude: number;
+          notes: string;
+          primary_color: Database['public']['Tables']['sightings']['Row']['primary_color'];
+          pattern: Database['public']['Tables']['sightings']['Row']['pattern'];
+          points_awarded: number;
+          rarity_label: Database['public']['Tables']['sightings']['Row']['rarity_label'];
+          created_at: string;
+        }[];
       };
     };
   };
