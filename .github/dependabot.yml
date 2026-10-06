@@ -1,0 +1,78 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'chore(deps)'
+      include: scope
+    labels:
+      - dependencies
+    groups:
+      expo-ecosystem:
+        patterns:
+          - 'expo'
+          - 'expo-*'
+          - '@expo/*'
+      react-native:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - 'react-native'
+          - 'react-native-*'
+          - '@react-native/*'
+          - '@react-native-async-storage/*'
+      supabase:
+        patterns:
+          - '@supabase/*'
+      dev-tooling:
+        dependency-type: development
+    ignore:
+      # Expo SDK jumps are sequenced by hand and reviewed one SDK at a time.
+      # See docs/decisions/0001-expo-sdk-upgrade-path.md.
+      - dependency-name: expo
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+      - dependency-name: expo-*
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+      - dependency-name: '@expo/*'
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+      - dependency-name: react
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+      - dependency-name: react-native
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+      - dependency-name: '@react-native/*'
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+      - dependency-name: '@react-native-async-storage/*'
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-major
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: 'chore(ci)'
+    labels:
+      - dependencies
+    groups:
+      github-actions:
+        patterns:
+          - '*'

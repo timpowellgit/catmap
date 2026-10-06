@@ -25,7 +25,28 @@ npm run lint
 npm run test
 npm run typecheck
 npm run format
+npm run audit:policy
 ```
+
+## Continuous Integration
+
+Every pull request and push to `main` runs the workflow in
+[.github/workflows/ci.yml](.github/workflows/ci.yml):
+
+- formatting, linting, and type checking (`npm run check`)
+- unit tests (`npm test`)
+- Expo Doctor (`npx expo-doctor@1.20.4`)
+- the dependency advisory policy (`npm run audit:policy`)
+- local database migrations and pgTAP security tests
+- secret scanning and dependency review
+
+No CI job needs production credentials or calls a paid external provider.
+
+Known npm advisories are tracked with an owner, exposure analysis, mitigation,
+and review date in
+[config/dependency-advisories.json](config/dependency-advisories.json).
+`npm run audit:policy` fails when an advisory is unreviewed, when a tracked
+entry no longer applies, or when a review date has passed.
 
 ## Supabase Setup
 
@@ -59,3 +80,4 @@ See [supabase.md](docs/supabase.md) for setup and local database test commands.
 See [docs/mvp.md](docs/mvp.md) for the current product baseline.
 See [docs/vision-matching.md](docs/vision-matching.md) for the planned open-set cat-matching architecture.
 See [docs/production-roadmap.md](docs/production-roadmap.md) for the sequenced path to a secure, AI-assisted production release.
+See [docs/decisions/](docs/decisions) for accepted architecture decisions, starting with the [Expo SDK upgrade path](docs/decisions/0001-expo-sdk-upgrade-path.md).
