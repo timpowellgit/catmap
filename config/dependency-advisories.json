@@ -36,22 +36,11 @@
       "reviewBy": "2026-11-05"
     },
     {
-      "id": "1241202",
-      "package": "sprintf-js",
-      "severity": "moderate",
-      "title": "sprintf-js vulnerable to denial of service through unbounded precision specifiers",
-      "exposure": "Build-time only, reached through argparse in the React Native community CLI on Node. Not shipped to the device runtime. Still present after the SDK 55 step.",
-      "risk": "A crafted CLI argument could stall a build. Arguments come from committed npm scripts.",
-      "mitigation": "No runtime exposure; a later Expo SDK step in docs/decisions/0001-expo-sdk-upgrade-path.md removes it.",
-      "owner": "@timpowellgit",
-      "reviewBy": "2026-11-05"
-    },
-    {
       "id": "1119441",
       "package": "uuid",
       "severity": "moderate",
       "title": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
-      "exposure": "Build-time only, reached through @expo/cli on Node. The app does not generate UUIDs with a caller-supplied buffer. Still present after the SDK 55 step.",
+      "exposure": "Build-time only, reached through @expo/cli on Node. The app does not generate UUIDs with a caller-supplied buffer. Still present after the SDK 57 step.",
       "risk": "Not reachable from application code.",
       "mitigation": "No runtime exposure; a later Expo SDK step in docs/decisions/0001-expo-sdk-upgrade-path.md removes it.",
       "owner": "@timpowellgit",
