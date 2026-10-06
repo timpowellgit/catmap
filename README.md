@@ -58,3 +58,4 @@ See [supabase.md](docs/supabase.md) for setup and local database test commands.
 
 See [docs/mvp.md](docs/mvp.md) for the current product baseline.
 See [docs/vision-matching.md](docs/vision-matching.md) for the planned open-set cat-matching architecture.
+See [docs/production-roadmap.md](docs/production-roadmap.md) for the sequenced path to a secure, AI-assisted production release.
