@@ -22,21 +22,22 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
     "@supabase/supabase-js": "^2.117.2",
-    "expo": "~55.0.31",
-    "expo-image-picker": "~55.0.24",
-    "expo-location": "~55.1.14",
-    "expo-status-bar": "~55.0.6",
-    "react": "19.2.0",
-    "react-native": "0.83.10",
+    "expo": "~57.0.26",
+    "expo-image-picker": "~57.0.20",
+    "expo-location": "~57.0.20",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
     "react-native-url-polyfill": "^3.0.0"
   },
   "devDependencies": {
+    "@types/node": "^22.20.5",
     "@types/react": "~19.2.10",
     "eslint": "^9.39.4",
-    "eslint-config-expo": "~55.0.1",
+    "eslint-config-expo": "~57.0.2",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
-    "typescript": "~5.9.2"
+    "typescript": "~6.0.3"
   },
   "private": true
 }

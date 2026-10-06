@@ -50,8 +50,8 @@ each ending on a green CI run and a physical-device smoke test:
 | ------------ | -------- | ------------ | ------ | ----------------- | ------------- | --------------- | ---------- |
 | 0 (baseline) | 54.0.37  | 0.81.5       | 19.1.0 | ~17.0.11          | ~19.0.8       | ~3.0.9          | superseded |
 | 1            | 55.0.31  | 0.83.10      | 19.2.0 | ~55.0.24          | ~55.1.14      | ~55.0.6         | landed     |
-| 2            | 56.0.23  | 0.85.3       | 19.2.3 | ~56.0.25          | ~56.0.26      | ~56.0.4         | pending    |
-| 3            | 57.0.26  | 0.86.3       | 19.2.3 | ~57.0.20          | ~57.0.20      | ~57.0.1         | pending    |
+| 2            | 56.0.23  | 0.85.3       | 19.2.3 | ~56.0.25          | ~56.0.26      | ~56.0.4         | skipped    |
+| 3            | 57.0.26  | 0.86.3       | 19.2.3 | ~57.0.20          | ~57.0.20      | ~57.0.1         | landed     |
 
 Versions come from each SDK's `bundledNativeModules.json`. The exact patch
 versions are resolved at upgrade time by `npx expo install`, which is the
@@ -79,6 +79,21 @@ Each step follows the same procedure:
   resolved six advisories (two `image-size`, four `postcss`) and introduced
   none, so the advisory register dropped from eleven entries to five. A
   physical-device smoke test is still required before merge.
+- **Step 2 (SDK 55 → 56) skipped.** `expo-doctor` reports that SDK 56 ships
+  Hermes V1 `250829098.0.10`, which is affected by a known memory regression,
+  and Expo recommends SDK 57 instead. Landing SDK 56 would also fail the CI
+  Expo Doctor gate, so the project moved straight to SDK 57. This is a
+  deliberate, documented deviation from the one-step-at-a-time rule.
+- **Step 3 (SDK 55 → 57) implemented.** `expo@57.0.26`,
+  `react-native@0.86.3`, `react@19.2.3`. `app.json` dropped the top-level
+  `splash` property, which SDK 57 removed from the schema; the assets remain
+  and splash configuration will move to the `expo-splash-screen` plugin when
+  that dependency is approved. A test toolchain fix was needed: TypeScript 6
+  no longer resolves the `node:test` specifier for the existing test file, so
+  `@types/node` (22.x) was pinned as an explicit devDependency and the
+  compiler now declares `types: ["node"]`. The step resolved one advisory
+  (`sprintf-js`), leaving four. iOS builds on Xcode 27 are subject to
+  ADR-0002; Android builds and runs.
 
 ## Consequences
 
@@ -115,7 +130,13 @@ before milestone M7; the runtime-version policy is defined there.
 
 ## Open questions
 
-- Whether `expo-doctor` or `npm audit` surfaces a new advisory in SDK 56 or 57
-  that is not in the current register. SDK 55 introduced none.
+- Whether `expo-doctor` or `npm audit` surfaces a new advisory in SDK 58 that is
+  not in the current register. SDK 55 and 57 introduced none.
+- Whether the top-level `splash` migration to the `expo-splash-screen` plugin
+  should happen as its own change, and whether the app needs a custom splash at
+  all.
+- When SDK 58 becomes stable, whether to adopt it for UIScene/iOS 27 support
+  (see [ADR-0002](0002-ios-xcode-and-uiscene-constraint.md)), and whether it
+  needs the same prebuild workarounds seen under Xcode 27.
 - Whether any native module used later (map, notifications, secure store) needs
   a config-plugin change at a specific SDK boundary. This is resolved per step.

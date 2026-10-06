@@ -19,13 +19,9 @@
         {
           "locationWhenInUsePermission": "CatMap uses your rough location to place sightings on the neighborhood map."
         }
-      ]
+      ],
+      "expo-status-bar"
     ],
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#f4e9d8"
-    },
     "ios": {
       "supportsTablet": true
     },
