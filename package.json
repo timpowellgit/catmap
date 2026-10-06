@@ -26,9 +26,9 @@
     "expo-image-picker": "~57.0.20",
     "expo-location": "~57.0.20",
     "expo-status-bar": "~57.0.1",
-    "react": "19.2.3",
+    "react": "19.2.8",
     "react-native": "0.86.3",
-    "react-native-url-polyfill": "^3.0.0"
+    "react-native-url-polyfill": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",
